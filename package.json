@@ -13,14 +13,104 @@
   "commands": [
     {
       "name": "generate-speech",
-      "title": "generate-speech",
-      "subtitle": "Generate Speech",
+      "title": "Generate Speech",
+      "subtitle": "TTS Microsoft",
       "description": "Text to Speech",
-      "mode": "view"
+      "mode": "no-view",
+      "preferences": [
+        {
+          "data": [
+            {
+              "title": "晓晓（普通话，简体）",
+              "value": "zh-CN-XiaoxiaoNeural"
+            },
+            {
+              "title": "晓伊（普通话，简体）",
+              "value": "zh-CN-XiaoyiNeural"
+            },
+            {
+              "title": "云健（普通话，简体）",
+              "value": "zh-CN-YunjianNeural"
+            },
+            {
+              "title": "云希（普通话，简体）",
+              "value": "zh-CN-YunxiNeural"
+            },
+            {
+              "title": "云夏（普通话，简体）",
+              "value": "zh-CN-YunxiaNeural"
+            },
+            {
+              "title": "云扬（普通话，简体）",
+              "value": "zh-CN-YunyangNeural"
+            },
+            {
+              "title": "晓北（东北官话，简体）",
+              "value": "zh-CN-liaoning-XiaobeiNeural"
+            },
+            {
+              "title": "晓妮（陕西官话，简体）",
+              "value": "zh-CN-shaanxi-XiaoniNeural"
+            },
+            {
+              "title": "晓臻（台湾普通话）",
+              "value": "zh-TW-HsiaoChenNeural"
+            },
+            {
+              "title": "云哲（台湾普通话）",
+              "value": "zh-TW-YunJheNeural"
+            },
+            {
+              "title": "晓雨（台湾普通话）",
+              "value": "zh-TW-HsiaoYuNeural"
+            }
+
+          ],
+          "name": "voice",
+          "title": "Voice",
+          "description": "Change the voice of the speech",
+          "type": "dropdown",
+          "required": true
+        },
+        {
+          "data": [
+            {
+              "title": "EDGE 接口",
+              "value": "/ra"
+            },
+            {
+              "title": "Azure 接口",
+              "value": "/azure"
+            }
+          ],
+          "name": "api",
+          "title": "API",
+          "description": "Change the API of the speech",
+          "type": "dropdown",
+          "required": true
+        },
+        {
+          "description": "Set the directory of the speech",
+          "name": "fileDirectory",
+          "required": true,
+          "title": "File Directory",
+          "type": "directory"
+        },
+        {
+          "default": false,
+          "description": "Open Directory",
+          "label": "Enabled",
+          "name": "openDirectory",
+          "required": false,
+          "title": "Open Directory",
+          "type": "checkbox"
+        }
+      ]
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.49.2"
+    "@raycast/api": "^1.49.2",
+    "axios": "^1.3.5"
   },
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",
