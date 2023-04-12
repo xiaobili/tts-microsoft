@@ -5,7 +5,7 @@ export default async () => {
   const cache = new Cache();
   const playmusic: String | null = cache.get("playmusic") || null;
   if (playmusic) {
-    exec(`kill -9 ${playmusic}`);
+    exec(`kill -15 ${playmusic}`);
     cache.remove("playmusic");
     await showHUD("音频已停止");
   } else {
