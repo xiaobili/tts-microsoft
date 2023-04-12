@@ -33,9 +33,7 @@ export default async () => {
 
   await showToast(Toast.Style.Animated, "Generating  Voice...");
 
-  const res = await request.post(api, template);
-
-  const { data } = res;
+  const cache = new Cache();
 
   const nowTime = getNowTime();
 
@@ -43,26 +41,30 @@ export default async () => {
 
   const filePath = `${fileDirectory}/${fileName}`;
 
-  // 生成音频文件
-  fs.writeFileSync(filePath, data);
-
-  let playmusic: ChildProcess | null = null;
-  // 打开文件夹
-  if (openDirectory) {
-    exec(`open ${fileDirectory}`);
-    exec(`afplay ${filePath}`);
+  if (cache.get("playmusic")) {
+    await showHUD("请先停止播放音频");
+    return;
   } else {
-    playmusic = exec(`afplay ${filePath}`);
-    // 关闭音频监听
-    playmusic.on("exit", function (code, signal) {
-      console.log("child process exited with " + `code ${code} and signal ${signal}`);
+    // 将播放音频包装成 promise
+    const playMusic = (filePath: string): Promise<ChildProcess> => {
+      return new Promise(async (resolve) => {
+        const res = await request.post(api, template);
+        const { data } = res;
+        // 生成音频文件
+        fs.writeFileSync(filePath, data);
+        resolve(exec(`afplay ${filePath}`));
+      });
+    };
+    const p = await playMusic(filePath);
+    cache.set("playmusic", p.pid?.toString() || "");
+    console.log(cache.get("playmusic"));
+
+    p.on("exit", () => {
+      if (cache.get("playmusic")) {
+        cache.remove("playmusic");
+      }
+      console.log("进程已退出");
     });
   }
-
-  const cache = new Cache();
-  if (playmusic) {
-    cache.set("playmusic", playmusic.pid?.toString() || "");
-  }
-
   await showToast(Toast.Style.Success, "Generate Voice Success");
 };
