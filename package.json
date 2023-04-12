@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "tts-microsoft",
   "title": "TTS MICROSOFT",
-  "description": "Text to Speech",
+  "description": "Text to Speech Microsoft",
   "icon": "command-icon.png",
   "author": "xiaobili",
   "owner": "billyjr",
@@ -64,7 +64,6 @@
               "title": "晓雨（台湾普通话）",
               "value": "zh-TW-HsiaoYuNeural"
             }
-
           ],
           "name": "voice",
           "title": "Voice",
@@ -106,6 +105,13 @@
           "type": "checkbox"
         }
       ]
+    },
+    {
+      "name": "kill-speech",
+      "title": "Kill Speech",
+      "subtitle": "TTS Microsoft",
+      "description": "Kill Speech Process",
+      "mode": "no-view"
     }
   ],
   "dependencies": {
