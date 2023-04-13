@@ -52,6 +52,11 @@ export default async () => {
         const { data } = res;
         // 生成音频文件
         fs.writeFileSync(filePath, data);
+        //打开音频文件所在目录
+        if (openDirectory) {
+          const fileDir = fileDirectory.replace(/ /g, "\\ ");
+          exec(`open ${fileDir}`);
+        }
         resolve(exec(`afplay ${filePath}`));
       });
     };
