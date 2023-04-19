@@ -2,9 +2,9 @@ import { getSelectedText, showToast, Toast, showHUD, getPreferenceValues, Cache 
 import playMusic from "./utils/playMusic";
 interface Preferences {
   voice: string;
+  style: string;
   fileDirectory: string;
   openDirectory: boolean;
-  api: string;
 }
 
 export default async () => {
@@ -17,7 +17,7 @@ export default async () => {
     await showHUD("请确保您已选择要生成音频的文本");
     return;
   }
-  const { voice, fileDirectory, api, openDirectory } = preferences;
+  const { voice, style, fileDirectory, openDirectory } = preferences;
 
   const cache = new Cache();
 
@@ -26,15 +26,13 @@ export default async () => {
     return;
   } else {
     await showToast(Toast.Style.Animated, "语音生成中...");
-    const p = await playMusic(voice, selectedText, api, openDirectory, fileDirectory);
-    cache.set("playmusic", p.pid?.toString() || "");
-    console.log(cache.get("playmusic"));
-    p.on("exit", () => {
-      if (cache.get("playmusic")) {
-        cache.remove("playmusic");
-      }
-      console.log("进程已退出");
-    });
+    const p = await playMusic(voice, style, selectedText, "/speak", openDirectory, fileDirectory);
+    if (p === 1) {
+      await showToast(Toast.Style.Success, "语音生成完毕");
+    } else if (p === 0) {
+      await showToast(Toast.Style.Failure, "语音播放被中断");
+    } else {
+      await showToast(Toast.Style.Failure, "语音生成失败");
+    }
   }
-  await showToast(Toast.Style.Success, "Generate Voice Success");
 };

@@ -1,12 +1,13 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: "http://192.168.5.145:1233/api",
+    baseURL: "https://southeastasia.api.speech.microsoft.com/accfreetrial/texttospeech/acc/v3.0-beta1/vcg",
     headers: {
-        "Content-Type": "text/plain",
-        "Format": "audio-24khz-48kbitrate-mono-mp3"
+        "Content-Type": "application/json",
+        "Origin": "https://speech.microsoft.com",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
     },
-    responseType: "arraybuffer"
+    responseType: "arraybuffer",
 });
 
 export default request;

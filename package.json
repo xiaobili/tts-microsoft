@@ -72,28 +72,84 @@
           "required": true
         },
         {
-          "data": [
-            {
-              "title": "EDGE 接口",
-              "value": "/ra"
-            },
-            {
-              "title": "Azure 接口",
-              "value": "/azure"
-            }
-          ],
-          "name": "api",
-          "title": "API",
-          "description": "Change the API of the speech",
-          "type": "dropdown",
-          "required": true
-        },
-        {
           "description": "Set the directory of the speech",
           "name": "fileDirectory",
           "required": true,
           "title": "File Directory",
           "type": "directory"
+        },
+        {
+          "description": "Set the style of the speech",
+          "name": "style",
+          "required": true,
+          "title": "Style",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "默认",
+              "value": "Default"
+            },
+            {
+              "title": "助手",
+              "value": "assistant"
+            },
+            {
+              "title": "聊天",
+              "value": "chat"
+            },
+            {
+              "title": "新闻",
+              "value": "newscast"
+            },
+            {
+              "title": "撒娇",
+              "value": "affectionate"
+            },
+            {
+              "title": "愤怒",
+              "value": "angry"
+            },
+            {
+              "title": "平静",
+              "value": "calm"
+            },
+            {
+              "title": "愉悦",
+              "value": "cheerful"
+            },
+            {
+              "title": "不满",
+              "value": "disgruntled"
+            },
+            {
+              "title": "害怕",
+              "value": "fearful"
+            },
+            {
+              "title": "温柔",
+              "value": "gentle"
+            },
+            {
+              "title": "抒情",
+              "value": "lyrical"
+            },
+            {
+              "title": "悲伤",
+              "value": "sad"
+            },
+            {
+              "title": "严厉",
+              "value": "serious"
+            },
+            {
+              "title": "诗朗诵",
+              "value": "poetry-reading"
+            },
+            {
+              "title": "友好",
+              "value": "friendly"
+            }
+          ]
         },
         {
           "default": false,
