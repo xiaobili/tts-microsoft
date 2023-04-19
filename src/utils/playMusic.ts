@@ -18,7 +18,7 @@ const playMusic = (
     const template = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
                           xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml"
                           xml:lang="zh-CN">
-                          <voice name="zh-CN-XiaoxiaoNeural">
+                          <voice name="${voice}">
                               <mstts:express-as style="${style}">${selectedText}</mstts:express-as>
                           </voice>
                       </speak>`;
