@@ -27,7 +27,7 @@ const playMusic = (
       ssml: template,
       ttsAudioFormat: "audio-24khz-48kbitrate-mono-mp3",
       offsetInPlainText: 0,
-      lengthInPlainText: selectedText.length,
+      lengthInPlainText: template.length,
       properties: {
         SpeakTriggerSource: "AccTuningPagePlayButton",
       },
