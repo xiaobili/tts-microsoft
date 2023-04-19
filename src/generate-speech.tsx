@@ -27,12 +27,14 @@ export default async () => {
   } else {
     await showToast(Toast.Style.Animated, "语音生成中...");
     const p = await playMusic(voice, style, selectedText, "/speak", openDirectory, fileDirectory);
-    if (p === 1) {
+    if (p === 200) {
       await showToast(Toast.Style.Success, "语音生成完毕");
-    } else if (p === 0) {
-      await showToast(Toast.Style.Failure, "语音播放被中断");
+    } else if (p === 429) {
+      await showHUD("请求过于频繁，请稍后再试");
+      await showToast(Toast.Style.Failure, "请求过于频繁，请稍后再试");
     } else {
-      await showToast(Toast.Style.Failure, "语音生成失败");
+      await showHUD("请求失败，请稍后再试");
+      await showToast(Toast.Style.Failure, "请求失败，请稍后再试");
     }
   }
 };

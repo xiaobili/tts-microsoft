@@ -33,38 +33,43 @@ const playMusic = (
       },
     };
 
-    const res = await request.post(api, requestData);
-    const { data } = res;
+    try {
+      const { data, status } = await request.post(api, requestData);
+      console.log("status", status);
+      if (status === 200) {
+        // 生成音频文件
+        fs.writeFileSync(filePath, data);
 
-    // 生成音频文件
-    fs.writeFileSync(filePath, data);
+        const cache = new Cache();
 
-    const cache = new Cache();
-
-    //打开音频文件所在目录
-    if (openDirectory) {
-      const openDir = exec(`open ${fileDir.replace(/ /g, "\\ ")}`);
-      openDir.on("exit", () => {
-        const play = exec(`afplay ${filePath.replace(/ /g, "\\ ")}`);
-        cache.set("playmusic", play.pid?.toString() || "");
-        play.on("exit", () => {
-          if (cache.get("playmusic") === play.pid?.toString()) {
-            cache.remove("playmusic");
-            console.log("播放完毕");
-            resolve(1);
-          } else resolve(0);
-        });
-      });
-    } else {
-      const play = exec(`afplay ${filePath.replace(/ /g, "\\ ")}`);
-      cache.set("playmusic", play.pid?.toString() || "");
-      play.on("exit", () => {
-        if (cache.get("playmusic") === play.pid?.toString()) {
-          cache.remove("playmusic");
-          console.log("播放完毕");
-          resolve(1);
-        } else resolve(0);
-      });
+        //打开音频文件所在目录
+        if (openDirectory) {
+          const openDir = exec(`open ${fileDir.replace(/ /g, "\\ ")}`);
+          openDir.on("exit", () => {
+            const play = exec(`afplay ${filePath.replace(/ /g, "\\ ")}`);
+            cache.set("playmusic", play.pid?.toString() || "");
+            play.on("exit", () => {
+              if (cache.get("playmusic") === play.pid?.toString()) {
+                cache.remove("playmusic");
+                console.log("播放完毕");
+                resolve(status);
+              } else resolve(status);
+            });
+          });
+        } else {
+          const play = exec(`afplay ${filePath.replace(/ /g, "\\ ")}`);
+          cache.set("playmusic", play.pid?.toString() || "");
+          play.on("exit", () => {
+            if (cache.get("playmusic") === play.pid?.toString()) {
+              cache.remove("playmusic");
+              console.log("播放完毕");
+              resolve(status);
+            } else resolve(status);
+          });
+        }
+      }
+    } catch (error: any) {
+      resolve(error.response.status);
     }
   });
 };
